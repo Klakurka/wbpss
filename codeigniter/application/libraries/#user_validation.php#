@@ -1,0 +1,72 @@
+<?php
+class User_validation{
+	private $CI;
+
+	public function __construct(){
+		$this->CI =& get_instance();
+		$this->CI->load->model('party/user_model', 'users');
+	}
+
+	public function validate_viewer(){
+		$class = $this->CI->router->class;
+		$method = $this->CI->router->method;
+
+		//load our config file to see which files the user can view
+		$this->CI->config->load('page_rules');
+		$page_rules = $this->CI->config->item('pr');
+		$tiers = $this->CI->users->select_accessRights();
+
+		if(array_key_exists('open', $page_rules)){
+			if(array_key_exists($class, $page_rules['open']) && in_array($method, $page_rules['open'][$class])){
+				return true;
+			}
+		}else if($this->is_logged_in()){
+			foreach($tiers as $tier){
+				if(array_key_exists($tier['strAccessRightsDescription'], $page_rules)){
+					if(array_key_exists($class, $page_rules[$tier['strAccessRightsDescription']])
+						&& in_array($method, $page_rules[$tier['strAccessRightsDescription']][$class])){
+						return true;
+					}
+				}
+			}
+			$this->redirect_lastpage(current_url());
+		}
+		$this->redirect_login(current_url());
+	}
+
+	public function validate_user($user_name, $password){
+		$user = $this->CI->users->select_users($user_name);
+		if(isset($user['strUserPass'])){
+			if(crypt($password, $user['strUserPass']) == $user['strUserPass']){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public function access_granted(){
+	
+	}
+
+	public function is_logged_in($user = NULL){
+		return false;
+	}
+
+	public function redirect_login($previous_page){
+		$this->CI->session->set_flashdata('last_page', $previous_page);
+		$this->CI->session->set_flashdata('warning', 'Please login to view page.');
+		redirect('users/login');
+	}
+
+	public function return_to_lastpage(){
+		if($last_page = $this->CI->session->flashdata('last_page')){
+			redirect($last_page);
+		}
+	}
+
+	public function redirect_lastpage($previous_page){
+		$this->CI->session->set_flashdata('warning', 'Account does not have the needed persmissions to view that resource.');
+		redirect($previous_page);
+	}
+}
+?>

@@ -1,0 +1,368 @@
+/*/
+ * 		file:			main.css
+ * 		author:			Tylor Goudie
+ * 		description:	This file contains the default CSS for anything but printers or mobile devices. 
+ * 		-----------------------------------------------------------------------------------------------
+ * 		Style-files in this project:
+ * 			- main.css - Primary CSS file for all media except printers and mobile phones.
+ * 			- mobile.css - CSS for mobile devices.
+ * 			- print.css - CSS for printing the pricesheets.
+/*/
+
+/*- top of page (Title, Header, Nav Bar) -*/
+
+body
+{
+	float:left;
+	margin-right:5%;
+	margin-left:5%;
+	width:90%;
+	min-width:660px; 
+	overflow:scroll;
+	/* Page will remain viewable if used in a half-page format, while preventing anything with the float:left; property from wrapping. Entire page will scale with the browser window for easier viewing/less scrolling. */
+}
+
+h1
+{
+	white-space:nowrap;
+	font-size:5em;
+	margin:0px;
+}
+/*- Navigation Bar */
+nav
+{
+	float:left;
+	background-color:#0089CF;
+	width:100%;
+	clear:both;
+	height:30px;
+	padding-right:6px;
+}
+
+nav ul
+{
+	list-style:none;
+	white-space:nowrap;
+	float:left;
+	width:100%;
+	clear:both;
+}
+
+nav li
+{
+	float:left;
+	display:inline-block;
+	height:30px;
+}
+
+nav a
+{
+	height:20px;
+	float:left;
+	padding:5px;
+	text-decoration:none;
+	text-align:center;
+	width:100px;
+	display:inline-block;
+	background-color:#0089CF;
+	color:#FFFFFF;
+}
+
+nav a:hover, .paging a:hover
+{
+	background-color:#1099EF;
+}
+
+.help
+{
+	float:right;
+}
+
+.login
+{
+	width:auto;
+	position:absolute;
+	top:0px;
+	right:4px;
+}
+
+.index li
+{
+	margin-top:5px;
+	margin-left:5px;
+}
+
+.index
+{
+	clear:both;
+	float:left;
+}
+
+.search
+{
+	background-color:#0089CF;
+	color:white;
+}
+
+.search form
+{
+	margin:0px;
+}
+
+.search form label
+{
+	width:auto;
+}
+
+.hidden, .hidden input
+{
+	position:absolute;
+	display:none;
+}
+/*- central body of the page (data, forms, etc - will be subdivided) -*/
+
+#pageWrap
+{
+	float:left;
+	clear:both;
+	margin-top:35px;
+	margin-bottom:5px;
+	width:100%;
+	border-style:double;
+	border-width:3px;
+	border-color:#0089CF;
+	margin-bottom:5px;
+}
+
+p
+{
+	float:left;
+	margin:5px;
+	width:100%;
+	color:red;
+}
+
+.black
+{
+	color:black;
+}
+
+/*- Form decoration -*/
+
+form
+{
+	margin-top:5px;
+}
+
+fieldset
+{
+	border-style:none;
+	width:98%;
+	display:block;
+}
+
+legend
+{
+	width:98%;
+	background-color:#0089CF;
+	padding:5px;
+	color:white;
+}
+
+input, select, button
+{
+	margin:5px;
+	clear:both;
+}
+
+label
+{
+	display:inline-block;
+	margin:5px;
+	text-align:right;
+	width:150px;
+}
+
+/*- Data decoration -*/
+
+.title
+{
+	height:25px;
+	background-color:#0089CF;
+	color:#FFFFFF;
+	margin:0px;
+}
+
+.title span
+{
+	margin:0px;
+}
+
+span
+{
+	padding:3px;
+	display:inline-block;
+	width:100px;
+	height:19px;
+	margin:0px;
+	float:left;
+	white-space:nowrap;
+	overflow-x:hidden;
+	text-overflow:ellipsis;
+}
+
+#warning
+{
+	width:90%;
+	margin-left:4%;
+	background-color:#FF1122;
+	color:white;
+	border-color:white;
+	border-style:double;
+	border-width:3px;
+	clear:both;
+}
+
+.title span:hover
+{
+	background-color:#119ADF;
+}
+
+/*- different column sizes for data -*/
+
+.huge
+{
+	width:350px;
+}
+
+.big
+{
+	width:250px;
+}
+
+.large
+{
+	width:150px;
+}
+
+.small
+{
+	width:75px;
+}
+
+.tiny
+{
+	width:50px;
+}
+
+.center
+{
+	text-align:center;
+
+}
+
+/*- Zebra striping for data readability -*/
+
+.row
+{
+	height:25px;
+	clear:both;
+}
+
+.row:nth-child(even)
+{
+	background-color:#CFDAEF;
+}
+
+.row:nth-child(odd)
+{
+	background-color:#DFEAFF;
+}
+
+.row:hover
+{
+	background-color:#F0F0FF;
+}
+
+/*- Page bar styling -*/
+
+.paging
+{
+	text-align:center;
+	background-color:#0089CF;
+	color:white;
+	padding-top:8px;
+	padding-bottom:8px;
+	margin:0px;
+	width:100%;
+}
+
+.paging a
+{
+	text-decoration:none;
+	text-align:center;
+	padding:4px;
+	width:100px;
+	display:inline-block;
+	background-color:#0089CF;
+	color:#FFFFFF;
+}
+
+.back
+{
+float:left;
+}
+
+.next
+{
+float:right;
+}
+/*- Autocomplete Styling -*/
+
+.ui-autocomplete
+{
+	width:480px;
+	background-color:white;
+	border-style:double;
+	border-width:3px;
+	border-color:#0089CF;
+	max-height:500px;
+	overflow:auto;
+	overflow-x:hidden;
+}
+
+.ui-menu-item
+{
+	background-color:#0089CF;
+	color:white;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	padding:2px;
+	margin:1px;
+}
+
+.ui-corner-all
+{
+	display:block;
+	cursor:pointer;
+}
+
+.ui-menu-item:hover
+{
+	background-color:#1F9FE5;
+}
+
+/*- end of page -*/
+
+footer
+{
+	width:100%;
+	border-style:double;
+	border-width:3px;
+	border-color:#0089CF;
+	text-align:center;
+	padding-top:8px;
+	padding-bottom:10px;
+	float:left;
+}
