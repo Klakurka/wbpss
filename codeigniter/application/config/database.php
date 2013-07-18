@@ -48,7 +48,8 @@
 $active_group = 'user';
 $active_record = TRUE;
 
-//include($_SERVER['DOCUMENT_ROOT'].'/application/config/accessory_dbs/accessory_dbs.inc.php');
+include($_SERVER['DOCUMENT_ROOT'].'/misc/wbpss/codeigniter/application/config/accessory_dbs/accessory_dbs.inc.php');
+
 
 $db['user']['hostname'] = 'localhost';
 $db['user']['username'] = 'root';
