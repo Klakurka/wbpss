@@ -193,11 +193,11 @@ class Vehicle_model extends CI_Model{
 		return $vehicles->result_array();
 	}
 
-	public function select_models_byCode($model_code){
+	public function select_model_byCode($model_code){
 		$this->vehicles->where('strModelCode', strtoupper($model_code));
 		$models = $this->vehicles->get('tblModel');
 
-		return $models->result_array();
+		return $models->row_array();
 	}
 
 	public function select_makes(){
@@ -365,6 +365,35 @@ class Vehicle_model extends CI_Model{
 		return $vehicles->row_array();
 	}
 	
+	public function select_vehicle_options_byModelCode($model_code) {
+		$this->vehicles->select('*');
+		$this->vehicles->where('strModelCode', $model_code);
+		$this->vehicles->join('tblmodel', 'tblmodel.intModelID = tbloption.intModelID');
+		$vehicles = $this->vehicles->get('tbloption');
+		
+		return $vehicles->result_array();
+	}
+	
+	public function select_vehicle_options_rows_byModelID($modelID) {
+		$this->vehicles->select('*');
+		$this->vehicles->where('tbloption.intModelID', $modelID);
+		$this->vehicles->join('tblmodel', 'tblmodel.intModelID = tbloption.intModelID');
+		$vehicles = $this->vehicles->get('tbloption');
+		
+		return $vehicles->num_rows();
+	}
+	
+	public function select_vehicle_byID($model_code, $option_code) {
+		$this->vehicles->select('*');
+		$this->vehicles->where('strModelCode', $model_code);
+		$this->vehicles->where('strOptionCode', $option_code);
+		$this->vehicles->join('tbloption', 'tblmodel.intModelID = tbloption.intModelID');
+		$vehicles = $this->vehicles->get('tblmodel');
+		
+		return $vehicles->row_array();
+	}
+	
+	//DELETE FROM `ps_vehicle`.`tbloption` WHERE `intOptionID`='14';
 	/***************************************
 	 *	             UPDATE                *
 	 ***************************************/
@@ -383,6 +412,18 @@ class Vehicle_model extends CI_Model{
 		$this->vehicles->where('strModelCode', $model_code);
 		$this->vehicles->where('intFeatureID', $feature_id);
 		$this->vehicles->delete('tblModelFeature');
+	}
+	
+	public function delete_vehicle_byID($modelID, $optionID){
+		$this->vehicles->where('intModelID', $modelID);
+		$this->vehicles->where('intOptionID', $optionID);
+		//$this->vehicles->join('tbloption', 'tblmodel.intModelID = tbloption.intModelID');
+		$this->vehicles->delete('tbloption');
+	}
+	
+	public function delete_model_byID($modelID){
+		$this->vehicles->where('intModelID', $modelID);
+		$this->vehicles->delete('tblmodel');
 	}
 }
 ?>

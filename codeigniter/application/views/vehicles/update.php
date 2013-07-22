@@ -59,11 +59,11 @@ echo form_input('steering', set_value('steering', $vehicle['engineeringFeature']
 
 echo form_fieldset_close()."\n";
 
-echo form_fieldset('Option Info');
+echo form_fieldset('Package Info');
 
 echo form_label('Option Code', 'option_code');
-echo form_input('option_code', set_value('option_code', $vehicle['strOptionCode']));
-echo form_submit('add_option', 'Add Option')."<br />\n";
+echo form_input('option_code', set_value('option_code', $package['strOptionCode']));
+//echo form_submit('add_option', 'Add Option')."<br />\n";
 
 echo form_fieldset_close()."\n";
 

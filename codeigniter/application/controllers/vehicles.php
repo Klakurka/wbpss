@@ -131,7 +131,7 @@ class Vehicles extends CI_Controller{
 
 			//does this model code exist already?
 			$form['model_code'] = strtoupper($form['model_code']);
-			$model = $this->vehicles->select_models_byCode($form['model_code']);
+			$model = $this->vehicles->select_model_byCode($form['model_code']);
 
 			$model_exists = FALSE;
 			foreach($model as $m){
@@ -205,8 +205,8 @@ class Vehicles extends CI_Controller{
 				}
 
 				//model
-				$model_id = $this->vehicles->create_model(
-					$form['model_code'], $form['model_name'], $form['year'], $trim_id, $make_id, $engineering_id);
+				$model = $this->vehicles->create_model(
+					$form['model_code'], $form['model_name'], $form['year'], $trim_id, $make_id, $engineering_id, $form['slogan']);
 			}
 			
 			$option_codes = array();
@@ -219,7 +219,7 @@ class Vehicles extends CI_Controller{
 			if(count($option_codes) > 0){
 				$this->load->model('vehicle/package_model', 'packages');
 				foreach($option_codes as $o){
-					$this->packages->create_package(strtoupper($o), $model['intModelID'], $trim_id);
+					$this->packages->create_package(strtoupper($o), $model, $trim_id);
 				}
 			
 				$initial_code = array_shift($option_codes);
@@ -248,6 +248,7 @@ class Vehicles extends CI_Controller{
 		$data['view_data']['vehicle']['engineeringFeature']['transmission'] = $this->vehicles->select_transmission_byID($data['view_data']['vehicle']['engineeringFeature']['intTransmissionID']);
 		$data['view_data']['vehicle']['engineeringFeature']['brake'] = $this->vehicles->select_brake_byID($data['view_data']['vehicle']['engineeringFeature']['intBrakeID']);
 		$data['view_data']['vehicle']['engineeringFeature']['steering'] = $this->vehicles->select_steering_byID($data['view_data']['vehicle']['engineeringFeature']['intSteeringID']);
+		$data['view_data']['package']['strOptionCode'] = $option_code;
 		
 		$data['view_data']['years'] = array();
 		for($i = (intval(date("Y")) - 2); $i <= (intval(date("Y")) + 2); $i++){
@@ -285,8 +286,16 @@ class Vehicles extends CI_Controller{
 		$this->load->library('form_validation');
 		
 		switch($this->input->post('delete')){
+			// $model_code becomes $intModelID in here because of the last line ($this->load->view('templates/standard', $data);)... not sure why.
 			case 'yes':
 				$this->vehicles->delete_vehicle_byID($model_code, $option_code);
+				
+				// Check if there are no more options for that model. Remove the model if this is the case.
+				$numberOfRows = $this->vehicles->select_vehicle_options_rows_byModelID($model_code);
+				//echo $numberOfRows;
+				if ($numberOfRows == 0) {
+					$this->vehicles->delete_model_byID($model_code);	
+				}
 			case 'no':
 				redirect('vehicles');
 		}
